@@ -17,7 +17,7 @@ const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://main--sweet-tapioca-144832.netlify.apphttps://main--sweet-tapioca-144832.netlify.app",
         methods: ["GET", "POST"]
     }
 });
