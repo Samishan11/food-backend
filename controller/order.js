@@ -2,11 +2,13 @@ const OrderModel = require('../model/orderModel');
 const CartModel = require('../model/cartModel')
 // order 
 exports.order = async (req, res) => {
-    console.log(req.body);
     try {
         const Order = await new OrderModel(req.body);
         Order.save()
-        await CartModel.deleteMany({ user: req.userInfo._id, })
+       if(Order){
+        var a = await CartModel.deleteMany({ user: req.body.user })
+        console.log(req.userInfo._id)
+       }
         res.json({ 'Order': data })
     } catch (error) {
         res.json(error)
