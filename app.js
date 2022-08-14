@@ -10,14 +10,14 @@ const Food = require('./routes/foodRoute')
 const Order = require('./routes/orderRoute');
 const Contact = require('./routes/contactRoute');
 app.use(express.json());
-app.use(cors())
+app.use(cors(corsOptions))
 // socket 
 const { Server } = require('socket.io');
 const http = require('http');
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
-        origin: "https://main--sweet-tapioca-144832.netlify.app",
+        origin: "https://kandufood.netlify.app",
         methods: ["GET", "POST"]
     }
 });
