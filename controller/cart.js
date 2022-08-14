@@ -9,12 +9,12 @@ exports.addtocart = async (req, res) => {
         {
             food,
             name: Food.name,
-            price: req.body.price,
+            price: Food.price,
             quantity: req.body.quantity,
             image: Food.image,
             user: req.body.user,
         }).save().then(Cart => {
-
+            console.log(req.body)
             res.json({ 'Cart': Cart })
         }).catch(e => {
             res.json(e)

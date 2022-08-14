@@ -25,16 +25,17 @@ exports.register = async (req, res) => {
                         user: signup._id,
                         token: hasOTP
                     })
+                    console.log(OTP)
                     await verificationTOk.save()
                 })
                 await signup.save()
                 // console.log(signup.email);
-                // mail().sendMail({
-                //     from: "joker.shan99@gmail.com",
-                //     to: signup.email,
-                //     subject: "Verify your email",
-                //     html: `<p style="text-align:center; font-size:16px;"> Your OTP: ${OTP}</p>`
-                // })
+                mail().sendMail({
+                    from: "joker.shan99@gmail.com",
+                    to: signup.email,
+                    subject: "Verify your email",
+                    html: `<p style="text-align:center; font-size:16px;"> Your OTP: ${OTP}</p>`
+                })
                 res.json({ message: 'User register sucessfully', success: 'true' })
             })
         }
@@ -53,14 +54,14 @@ exports.login = async (req, res) => {
         if (hasing) {
             const token = jwt.sign({ _id: user._id, username: user.username, email: user.email ,isAdmin: user.isAdmin, verified: user.verified }, process.env.SECRET_KEY)
             res.json({ 'token': token, verified: user.verified , role: user.role })
-            // if(user.verified){
-            //     mail().sendMail({
-            //         from: "joker.shan99@gmail.com",
-            //         to: user.email,
-            //         subject: "Foodmandu",
-            //         html: `<p style="text-align:center; font-size:16px;">${user.username} just logged in to foodmandu</p>`
-            //     })
-            // }
+            if(user.verified){
+                mail().sendMail({
+                    from: "joker.shan99@gmail.com",
+                    to: user.email,
+                    subject: "Foodmandu",
+                    html: `<p style="text-align:center; font-size:16px;">${user.username} just logged in to foodmandu</p>`
+                })
+            }
         } else {
             res.json('Username or password not match')
         }
