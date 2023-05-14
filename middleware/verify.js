@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
-const user = require('../model/userModel');
+const user = require("../model/userModel");
 
-// middlewarre to verify the user 
+// middlewarre to verify the user
 // module.exports.verifyUser =  (req, res, next) => {
 //         const token = req.headers.authorization.split(' ')[1];
 //         console.log(token)
@@ -17,20 +17,23 @@ const user = require('../model/userModel');
 // }
 
 module.exports.verifyUser = function (req, res, next) {
-    try {
-        const token = req.headers.authorization.split(" ")[1];
-        console.log(token)
-        if(!token){
-            res.json({message: "Login Required!", success:false})
-        }
+  try {
+    const token = req.headers.authorization.split(" ")[1];
+    console.log(token);
+    if (!token) {
+      res.json({ message: "Login Required!", success: false });
+    }
 
-        const data = jwt.verify(token, process.env.SECRET_KEY);
-        const client = user.findOne({ _id: data._id }).then(function (result) {
-            req.userInfo = result;
-            next();
-        }).catch();
-    }
-    catch (e) {
-        res.json({message: e, success: false})
-    }
-}
+    const data = jwt.verify(token, process.env.SECRET_KEY);
+    console.log(data);
+    const client = user
+      .findOne({ _id: data._id })
+      .then(function (result) {
+        req.userInfo = result;
+        next();
+      })
+      .catch();
+  } catch (e) {
+    res.json({ message: e, success: false });
+  }
+};
