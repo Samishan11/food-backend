@@ -150,7 +150,7 @@ exports.OTPresend = async (req, res) => {
   } else {
     bycrypt.hash(OTP, 10, async (e, hasOTP) => {
       console.log(user._id);
-      const sendOtp = await new VerificationToken({
+      const sendOtp = new VerificationToken({
         user: user._id,
         token: hasOTP,
       });
